@@ -74,7 +74,7 @@ class Light(object):
     def enable(self):
         if not Light.enabled:
             glEnable(GL_LIGHTING)
-            Light.enable = True
+            Light.enabled = True
         glEnable(self.light_id)
 
 
