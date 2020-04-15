@@ -8,6 +8,32 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 
+class Cube(object):
+    sides = ((0, 1, 2, 3), (3, 2, 7, 6), (6, 7, 5, 4),
+             (4, 5, 1, 0), (1, 5, 7, 2), (4, 0, 3, 6))
+
+    def __init__(self, position, size, color):
+        self.position = position
+        self.color = color
+        x, y, z = map(lambda i: i / 2, size)
+        self.vertices = (
+            (x, -y, -z), (x, y, -z),
+            (-x, y, -z), (-x, -y, -z),
+            (x, -y, z), (x, y, z),
+            (-x, -y, z), (-x, y, z))
+
+    def render(self):
+        glPushMatrix()
+        glTranslate(*self.position)
+        glBegin(GL_QUADS)
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, self.color)
+        for side in Cube.sides:
+            for v in side:
+                glVertex3fv(self.vertices[v])
+        glEnd()
+        glPopMatrix()
+
+
 class Sphere(object):
     slices = 40
     stacks = 40
@@ -24,6 +50,8 @@ class Sphere(object):
         glMaterialfv(GL_FRONT, GL_DIFFUSE, self.color)
         gluSphere(self.quadratic, self.radius,
                   Sphere.slices, Sphere.stacks)
+        glPopMatrix()
+
 
 class App(object):
     def __init__(self, width=800, height=600):
