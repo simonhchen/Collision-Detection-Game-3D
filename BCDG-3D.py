@@ -197,3 +197,7 @@ class App(object):
         x = max(min(x, 7), -7)
         self.player.position = (x, y, z)
 
+
+if __name__ = "__main__":
+    app = App()
+    app.start()
