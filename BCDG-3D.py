@@ -73,9 +73,13 @@ class App(object):
         self.fps = 60
         self.width = width
         self.height = height
-        # ...
+        self.game_over = False
         self.light = Light(GL_LIGHT0, (0, 15, -25, 1))
-        # ...
+        self.player = Sphere(1, position=(0, 0, 0),
+                             color=(0, 1, 0, 1))
+        self.ground = Cube(position=(0, -1, -20),
+                           size=(16, 1, 60),
+                           color=(1, 1, 1, 1))
 
     def start(self):
         pygame.init()
@@ -86,13 +90,24 @@ class App(object):
         # ...
         glMatrixMode(GL_MODELVIEW)
         glEnable(GL_CULL_FACE)
-        # ...
-        clock = pygame.time.Clock()
+        self.main_loop()
 
+    def main_loop(self):
+        clock = pygame.time.Clock()
         while True:
-            dt = clock.tick(self.fps)
-            self.process_input(dt)
-            self.display()
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.quit()
+            if not self.game_over:
+                self.display()
+                dt = clock.tick(self.fps)
+                for block in self.blocks:
+                    block.update(dt)
+                self.clear_past_blocks()
+                self.add_random_blocks(dt)
+                self.check_collisions()
+                self.process_input(dt)
 
     def process_input(self, dt):
         for event in pygame.event.get():
@@ -123,7 +138,3 @@ class App(object):
         self.sphere1.renders()
         self.sphere2.renders()
         pygame.display.flip()
-
-    def quit(self):
-        pygame.quit()
-        sys.exit()
