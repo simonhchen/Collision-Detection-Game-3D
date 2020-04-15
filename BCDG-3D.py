@@ -104,6 +104,8 @@ class App(object):
         self.width = width
         self.height = height
         self.game_over = False
+        self.random_dt = 0
+        self.blocks = []
         self.light = Light(GL_LIGHT0, (0, 15, -25, 1))
         self.player = Sphere(1, position=(0, 0, 0),
                              color=(0, 1, 0, 1))
