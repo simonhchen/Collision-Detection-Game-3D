@@ -131,14 +131,14 @@ class App(object):
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
-                    sys.quit()
+                    sys.exit()
             if not self.game_over:
                 self.display()
                 dt = clock.tick(self.fps)
                 for block in self.blocks:
                     block.update(dt)
                 self.clear_past_blocks()
-                self.add_random_blocks(dt)
+                self.add_random_block(dt)
                 self.check_collisions()
                 self.process_input(dt)
 
