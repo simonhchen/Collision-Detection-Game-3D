@@ -90,7 +90,7 @@ class Sphere(object):
 
     def render(self):
         glPushMatrix()
-        glTranslate(*self.position)
+        glTranslatef(*self.position)
         glMaterialfv(GL_FRONT, GL_DIFFUSE, self.color)
         gluSphere(self.quadratic, self.radius,
                   Sphere.slices, Sphere.stacks)
@@ -118,7 +118,7 @@ class App(object):
         pygame.display.set_mode((self.width, self.height),
                                 OPENGL | DOUBLEBUF)
         pygame.display.set_caption(self.title)
-        glEnable(GL_CULL_FACE)
+        glEnable(GL_DEPTH_TEST)
         glClearColor(.1, .1, .1, 1)
         glMatrixMode(GL_PROJECTION)
         aspect = self.width / self.height
@@ -193,9 +193,9 @@ class App(object):
         pressed = pygame.key.get_pressed()
         x, y, z = self.player.position
         if pressed[K_LEFT]:
-            x -= 0.005 * dt
+            x -= 0.01 * dt
         if pressed[K_RIGHT]:
-            x += 0.005 * dt
+            x += 0.01 * dt
         x = max(min(x, 7), -7)
         self.player.position = (x, y, z)
 
