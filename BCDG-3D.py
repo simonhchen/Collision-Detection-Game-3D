@@ -159,9 +159,16 @@ class App(object):
                 self.generate_block(r)
 
     def generate_block(self, r):
-        size = 7 if r <0.03 else 5
+        size = 7 if r < 0.03 else 5
         offset = random.choice([-4, 0, 4])
         self.blocks.append(Block((offset, 0, -40), size))
+
+    def clear_past_blocks(self):
+        blocks = filter(lambda x: x.position[2] > 5,
+                        self.blocks)
+        for block in blocks:
+            self.blocks.remove(block)
+            del block
 
     def process_input(self, dt):
         for event in pygame.event.get():
