@@ -34,6 +34,20 @@ class Cube(object):
         glPopMatrix()
 
 
+class Block(Cube):
+    color = (0, 0, 1, 1)
+    speed = 0.01
+
+    def __init__(self, position, size):
+        super().__init__(position, (size, 1, 1), Block.color)
+        self.size = size
+
+    def update(self, dt):
+        x, y, z = self.position
+        z += Block.speed * dt
+        self.position = x, y, z
+
+
 class Sphere(object):
     slices = 40
     stacks = 40
@@ -60,6 +74,8 @@ class App(object):
         self.width = width
         self.height = height
         # ...
+        self.light = Light(GL_LIGHT0, (0, 15, -25, 1))
+        # ...
 
     def start(self):
         pygame.init()
@@ -68,9 +84,11 @@ class App(object):
         pygame.display.set_caption(self.title)
         glEnable(GL_CULL_FACE)
         # ...
-        glMatrixMode(GL_MODELVIEW0_EXT)
-
+        glMatrixMode(GL_MODELVIEW)
+        glEnable(GL_CULL_FACE)
+        # ...
         clock = pygame.time.Clock()
+
         while True:
             dt = clock.tick(self.fps)
             self.process_input(dt)
@@ -107,5 +125,5 @@ class App(object):
         pygame.display.flip()
 
     def quit(self):
-    pygame.quit()
-    sys.exit()
+        pygame.quit()
+        sys.exit()
