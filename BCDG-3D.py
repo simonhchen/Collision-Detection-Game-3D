@@ -145,7 +145,7 @@ class App(object):
                 self.process_input(dt)
 
     def check_collisions(self):
-        blocks = filter(lambda x: 0 < x.positions[2] < 1,
+        blocks = filter(lambda x: 0 < x.position[2] < 1,
                         self.blocks)
         x = self.player.position[0]
         r = self.player.radius
@@ -193,9 +193,9 @@ class App(object):
         pressed = pygame.key.get_pressed()
         x, y, z = self.player.position
         if pressed[K_LEFT]:
-            self.angle -= 0.005 * dt
+            x -= 0.005 * dt
         if pressed[K_RIGHT]:
-            self.angle += 0.005 * dt
+            x += 0.005 * dt
         x = max(min(x, 7), -7)
         self.player.position = (x, y, z)
 
