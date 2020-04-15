@@ -118,6 +118,7 @@ class App(object):
         pygame.display.set_mode((self.width, self.height),
                                 OPENGL | DOUBLEBUF)
         pygame.display.set_caption(self.title)
+        self.light.enable()
         glEnable(GL_DEPTH_TEST)
         glClearColor(.1, .1, .1, 1)
         glMatrixMode(GL_PROJECTION)
