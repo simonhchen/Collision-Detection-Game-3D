@@ -48,6 +48,7 @@ class Block(Cube):
         z += Block.speed * dt
         self.position = x, y, z
 
+
 class Light(object):
     enabled = False
     colors = [(1., 1., 1., 1.), (1., 0.5, 0.5, 1.),
@@ -98,7 +99,7 @@ class Sphere(object):
 
 class App(object):
     def __init__(self, width=800, height=600):
-        self.title = "OpenGL demo"
+        self.title = "BCDG-3d Game"
         self.fps = 60
         self.width = width
         self.height = height
@@ -116,7 +117,10 @@ class App(object):
                                 OPENGL | DOUBLEBUF)
         pygame.display.set_caption(self.title)
         glEnable(GL_CULL_FACE)
-        # ...
+        glClearColor(.1, .1, .1, 1)
+        glMatrixMode(GL_PROJECTION)
+        aspect = self.width / self.height
+        gluPerspective(45, aspect, 1, 100)
         glMatrixMode(GL_MODELVIEW)
         glEnable(GL_CULL_FACE)
         self.main_loop()
