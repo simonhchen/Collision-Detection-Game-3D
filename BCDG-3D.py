@@ -25,7 +25,7 @@ class Cube(object):
 
     def render(self):
         glPushMatrix()
-        glTranslate(*self.position)
+        glTranslatef(*self.position)
         glBegin(GL_QUADS)
         glMaterialfv(GL_FRONT, GL_DIFFUSE, self.color)
         for side in Cube.sides:
