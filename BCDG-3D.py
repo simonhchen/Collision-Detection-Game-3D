@@ -170,6 +170,19 @@ class App(object):
             self.blocks.remove(block)
             del block
 
+    def display(self):
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glLoadIdentity()
+        gluLookAt(0, 10, 10,
+                  0, 0, -5,
+                  0, 1, 0)
+        self.light.render()
+        for block in self.blocks:
+            block.render()
+        self.player.render()
+        self.ground.render()
+        pygame.display.flip()
+
     def process_input(self, dt):
         for event in pygame.event.get():
             if event.type == QUIT:
