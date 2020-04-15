@@ -184,31 +184,12 @@ class App(object):
         pygame.display.flip()
 
     def process_input(self, dt):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                self.quit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    self.quit()
-                if event.key == K_F1:
-                    self.quit()
-
         pressed = pygame.key.get_pressed()
-        if pressed[K_UP]:
-            self.distance -= 0.01 * dt
-        if pressed[K_DOWN]:
-            self.distance += 0.01 * dt
+        x, y, z = self.player.position
         if pressed[K_LEFT]:
             self.angle -= 0.005 * dt
         if pressed[K_RIGHT]:
             self.angle += 0.005 * dt
+        x = max(min(x, 7), -7)
+        self.player.position = (x, y, z)
 
-        self.distance = max(10, min(self.distance, 20))
-        self.angle %= math.pi * 2
-
-    def display(self):
-        # ...
-        self.light.render()
-        self.sphere1.renders()
-        self.sphere2.renders()
-        pygame.display.flip()
