@@ -198,6 +198,6 @@ class App(object):
         self.player.position = (x, y, z)
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app = App()
     app.start()
