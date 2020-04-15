@@ -137,6 +137,18 @@ class App(object):
                 self.check_collisions()
                 self.process_input(dt)
 
+    def check_collisions(self):
+        blocks = filter(lambda x: 0 < x.positions[2] < 1,
+                        self.blocks)
+        x = self.player.position[0]
+        r = self.player.radius
+        for block in blocks:
+            x1 = block.position[0]
+            s = block.size / 2
+            if x1-s < x-r < x1+s or x1-s < x+r < x1+s:
+                self.game_over = True
+                print("Game over!")
+
     def process_input(self, dt):
         for event in pygame.event.get():
             if event.type == QUIT:
