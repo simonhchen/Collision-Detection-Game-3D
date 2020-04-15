@@ -1,5 +1,6 @@
 import sys
 import math
+import random
 
 import pygame
 from pygame.locals import *
@@ -148,6 +149,19 @@ class App(object):
             if x1-s < x-r < x1+s or x1-s < x+r < x1+s:
                 self.game_over = True
                 print("Game over!")
+
+    def add_random_block(self, dt):
+        self.random_dt += dt
+        if self.random_dt >= 800:
+            r = random.random()
+            if r < 0.1:
+                self.random_dt = 0
+                self.generate_block(r)
+
+    def generate_block(self, r):
+        size = 7 if r <0.03 else 5
+        offset = random.choice([-4, 0, 4])
+        self.blocks.append(Block((offset, 0, -40), size))
 
     def process_input(self, dt):
         for event in pygame.event.get():
